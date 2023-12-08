@@ -19,18 +19,6 @@ public class Main {
         return out;
     }
 
-    public static long hashSeed(long z, Vector<Vector<Long>> map){
-        for(int i = 0; i != map.size(); i++){
-            Vector<Long> temp = map.get(i);
-            long drs = temp.get(0);
-            long srs = temp.get(1);
-            long len = temp.get(2);
-
-            if(srs <= z && z < srs+len) return drs+(z-srs);
-        }
-        return z;
-    }
-
     public static Vector<Vector<Vector<Long>>> load(File file){
         Vector<Vector<Vector<Long>>> out = new Vector<>();
         Scanner in;
@@ -60,27 +48,17 @@ public class Main {
         return out;
     }
 
-    public static long calculateRange(long x, long offset, Vector<Vector<Vector<Long>>> maps){
-        long minimum = Long.MAX_VALUE;
-        for(long i = x; i < x+offset; i++){
-            if(i%10000000==0) {
-                System.out.println(i + " / " + (x+offset));
-            }
-            for(Vector<Vector<Long>> map : maps){
-                long temp = hashSeed(i,map);
-                if(temp<minimum) minimum = temp;
-            }
-        }
-        return minimum;
-    }
-
     public static void main(String args[]){
-    File file = new File("/home/jstn/workspace/advent2023/seed/input");
+    File file = new File(args[0]);
         Vector<Vector<Vector<Long>>> maps = load(file);
         Vector<Long> seeds = maps.get(0).get(0);
         maps.remove(0);
-
-        System.out.println(calculateRange(seeds.get(0), seeds.get(1), maps));
+        Navigator x = new Navigator(seeds, maps);
+        long start = System.currentTimeMillis();
+        System.out.println(x.findMinimumLocation());
+        long end = System.currentTimeMillis();
+        long runtime = end-start;
+        System.out.println(runtime/1000);
     }
 }
 
