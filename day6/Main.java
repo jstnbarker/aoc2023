@@ -2,26 +2,41 @@ import java.util.Vector;
 import java.util.Scanner;
 import java.io.File;
 public class Main {
+    public static Vector<Integer> extractNumbers(String line, int begin, int end){
+        Vector<Integer> out = new Vector<>();
+        line+=" ";
+        String temp = "";
+        for(int i = begin; i <= end; i++){
+            if(line.charAt(i) == ' ') {
+                if (!temp.isEmpty()) {
+                    out.add(Integer.valueOf(temp));
+                }
+                temp = "";
+            }
+            else temp+=line.charAt(i);
+        }
+        return out;
+    }
     public static Vector<Vector<Integer>> extract(File file){
-        Scanner in;
         try{
-            in = new Scanner(file);
+            Scanner in = new Scanner(file);
+            Vector<Vector<Integer>> races = new Vector<>();
+            while(in.hasNextLine()){
+                String currentLine = in.nextLine();
+                int start = currentLine.indexOf(':');
+                Vector<Integer> numbers = extractNumbers(currentLine, start+1, currentLine.length());
+                races.add(numbers);
+            }
+            return races;
         } catch (Exception e) {
             System.out.println(e);
         }
-
-        Vector<Vector<Integer>> races = new Vector<>();
-        while(in.hasNextLine()){
-            String currentLine = in.nextLine();
-            Vector<Integer> numbers = new Vector<Integer>();
-            for(int i = 0; i < currentLine.length(); i++){
-
-            }
-            races.add(numbers);
-        }
+        return new Vector<>();
     }
 
     public static void main(String[] args){
-
+        File file = new File(args[0]);
+        Vector<Vector<Integer>> races = extract(file);
+        Marginalizer solver = new Marginalizer(races.get(0), races.get(1));
     }
 }
