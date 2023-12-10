@@ -38,5 +38,11 @@ public class Main {
         File file = new File(args[0]);
         Vector<Vector<Integer>> races = extract(file);
         Marginalizer solver = new Marginalizer(races.get(0), races.get(1));
+        System.out.print("Part 1: ");
+        System.out.println(solver.solve());
+        System.out.println("----");
+        System.out.print("Part 2: ");
+        System.out.println(solver.solve2());
+
     }
 }
