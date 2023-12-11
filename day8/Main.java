@@ -27,6 +27,9 @@ public class Main {
     }
     public static void main(String args[]){
         Navigator nav = load(new File(args[0]));
-        return;
+        //System.out.println(nav.length());
+        long start = System.currentTimeMillis();
+        System.out.println(nav.part2());
+        System.out.println((System.currentTimeMillis()-start)/1000);
     }
 }

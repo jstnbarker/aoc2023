@@ -9,6 +9,12 @@ public class Node {
         this.right=right;
     }
 
+    public Node(Node node){
+        this.id=node.getId();
+        this.left=node.getLeft();
+        this.right=node.getRight();
+    }
+
     public String getLeft() {
         return left;
     }
