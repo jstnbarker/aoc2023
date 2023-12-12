@@ -1,12 +1,13 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.HashMap;
 import java.util.Scanner;
 import java.util.Vector;
 
 public class Main {
     public static Navigator load(File in){
         Scanner fis;
-        Vector<Node> forks = new Vector<>();
+        HashMap<String, Node> forks = new HashMap<>();
         String path = "";
         try{
             fis = new Scanner(in);
@@ -14,7 +15,7 @@ public class Main {
             fis.nextLine(); // eat blank line
             while(fis.hasNextLine()){
                 String currentLine = fis.nextLine();
-                forks.add(new Node(
+                forks.put(currentLine.substring(0,3) ,new Node(
                         currentLine.substring(0,3), // id
                         currentLine.substring(7,10), // left
                         currentLine.substring(12,15) // right

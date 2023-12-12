@@ -1,21 +1,17 @@
+import java.util.HashMap;
 import java.util.Vector;
 
 public class Navigator {
-    Vector<Node> forks;
     String path;
+    HashMap<String, Node> forks = new HashMap<>();
 
-    Navigator(Vector<Node> forks, String path){
+    Navigator(HashMap<String, Node> forks, String path){
         this.forks = forks;
         this.path = path;
     }
 
     private Node getNode(String target){
-        for(Node node : forks){
-            if(node.getId().equals(target)){
-                return node;
-            }
-        }
-        return new Node("","", "");
+        return forks.get(target);
     }
 
     public int length(){
@@ -35,7 +31,8 @@ public class Navigator {
     public int part2(){
         Vector<Node> positions = new Vector<>();
         // add all nodes ending in A to tracked list
-        for(Node node : forks){
+        for(String id : forks.keySet()){
+            Node node = forks.get(id);
             if(node.getId().charAt(2)=='A'){
                 positions.add(new Node(node));
             }
