@@ -11,19 +11,22 @@ public class Main {
             while(in.hasNextLine()){
                 String currentLine = in.nextLine();
                 if(currentLine.isEmpty()){
-                    out.add(map);
+                    out.add(new MirrorMap(map));
                     map = new Vector<>();
                 }
                 else map.add(currentLine);
             }
             return out;
         } catch (FileNotFoundException e){
-            System.out.println(e);
+            System.out.println(e.getMessage());
         }
-
+        return new Vector<>();
     }
 
     public static void main(String[] args){
-
+        Vector<MirrorMap> x = load(new File(args[0]));
+        for(MirrorMap map : x){
+            map.findMirror();
+        }
     }
 }
