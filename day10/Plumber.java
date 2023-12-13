@@ -12,9 +12,8 @@ public class Plumber{
     private int[] findStart(){
         int[] s = new int[2];
         for(int j = 0; j != pipeMap.size(); j++){
-            String row = pipeMap.get(j);
-            for(int i = 0; i != row.length(); i++){
-                if(row.charAt(i)=='S'){
+            for(int i = 0; i != pipeMap.get(0).length(); i++){
+                if(getChar(i,j)=='S'){
                     s[0] = i;
                     s[1] = j;
                 }
@@ -25,6 +24,9 @@ public class Plumber{
 
     private char getChar(int[] position){
         return pipeMap.get(position[1]).charAt(position[0]);
+    }
+    private char getChar(int x, int y){
+        return pipeMap.get(y).charAt(x);
     }
 
     public int length(){
@@ -82,16 +84,16 @@ public class Plumber{
     // returns position of first found connecting pipe
     private int[] findLegalPipe(int[] start){
         int[][] neighbors = {
-                {start[0],start[1]-1}, // north
-                {start[0]+1, start[1]}, // east
-                {start[0], start[1]+1}, // south
-                {start[0]+1, start[1]} // west
+                {start[0]  , start[1]-1}, // north
+                {start[0]+1, start[1]  }, // east
+                {start[0]  , start[1]+1}, // south
+                {start[0]+1, start[1]  }  // west
         };
         char[][] legals = {
                 { '|', 'F', '7' }, // north
                 { '7', '-', 'J' }, // east
                 { 'L', '|', 'J' }, // south
-                { 'L', '-', 'F' } // west
+                { 'L', '-', 'F' }  // west
         };
 
         for(int i = 0; i < 4; i++)
