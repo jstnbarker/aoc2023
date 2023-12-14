@@ -24,14 +24,13 @@ public class MirrorMap {
         int out = 0;
         // check for vertical mirror
         // select column for test
-        for(int i = 0; i != map.size(); i++){
+        for(int i = 0; i < map.size()-1; i++){
             if(map.get(i).equals(map.get(i+1))){
-                System.out.println(map.get(i));
+
             }
         }
-        for(int i = 0; i < rotate.size(); i++){
+        for(int i = 0; i < rotate.size()-1; i++){
             if(rotate.get(i).equals(rotate.get(i+1))) {
-                System.out.println(rotate.get(i));
             }
         }
 
