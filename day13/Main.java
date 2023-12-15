@@ -23,10 +23,14 @@ public class Main {
         return new Vector<>();
     }
 
+    // 29835 too low
+
     public static void main(String[] args){
         Vector<MirrorMap> x = load(new File(args[0]));
-        for(MirrorMap map : x){
-            map.findMirror();
+        int out = 0;
+        for(MirrorMap m : x){
+            out+=m.solve();
         }
+        System.out.println(out);
     }
 }
