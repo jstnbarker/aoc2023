@@ -73,9 +73,37 @@ public class Main {
         return out;
     }
 
+    public static Vector<int[]> expand2(Vector<int[]> coordinates, Vector<String> map, int offset){
+        for(int x = map.getFirst().length()-1; x >=0 ; x--){
+            boolean found = true;
+            for(int y = 0; y < map.size(); y++){
+                if(map.get(y).charAt(x) == '#'){
+                    found=false;
+                    break;
+                }
+            }
+            if(found){
+                for(int[] coord : coordinates){
+                    if(coord[1]>x) coord[1]+=offset-1;
+                }
+            }
+        }
+
+        // check rows
+        for(int i = map.size()-1; i >= 0; i--){
+            String line = map.get(i);
+            if(!line.contains("#")){
+                for(int[] coord : coordinates){
+                    if(coord[0]>i) coord[0]+=offset-1;
+                }
+            }
+        }
+        return coordinates;
+    }
+
     public static void main(String[] args){
-        Vector<String> picture = expand(load(new File(args[0])));
-        Vector<int[]> galaxyList = findGalaxies(picture);
+        Vector<String> picture = load(new File(args[0]));
+        Vector<int[]> galaxyList = findGalaxies(expand(picture));
 
         int out = 0;
         for(int i = 0; i < galaxyList.size(); i++){
@@ -89,6 +117,24 @@ public class Main {
                 out+=distance;
             }
         }
-        System.out.println(out);
+
+        // 82000210 too low... nothing was wrong you just used the example input with 1000000 instead of 10
+        System.out.println("Part 1: " + out);
+        Vector<String> picture2 = load(new File(args[0]));
+        Vector<int[]> list2 = findGalaxies(picture2);
+        long out2 =0;
+        galaxyList = expand2(list2, picture2, 1000000);
+        for(int i = 0; i < galaxyList.size(); i++){
+            for (int j = i+1; j < galaxyList.size(); j++){
+                int[] a = galaxyList.get(i);
+                int[] b = galaxyList.get(j);
+                int distance=0;
+                distance+=Math.abs(b[0]-a[0]);
+                distance+=Math.abs(b[1]-a[1]);
+                System.out.println("Galaxy #" + (i+1) + " to galaxy #" + (j+1) + " == " + distance);
+                out2+=distance;
+            }
+        }
+        System.out.println("Part 2: " + out2);
     }
 }
